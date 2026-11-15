@@ -1,0 +1,95 @@
+public class UnboundedStack {
+
+    private int[] arr;
+    private int top;
+
+    // Constructor
+    public UnboundedStack() {
+        arr = new int[2];
+        top = -1;
+    }
+
+    // Push - Insert element
+    public void push(int data) {
+
+        if (top == arr.length - 1) {
+            resize(arr.length * 2);
+        }
+
+        arr[++top] = data;
+    }
+
+    // Pop - Remove element
+    public int pop() {
+
+        if (isEmpty()) {
+            System.out.println("Stack is Empty");
+            return -1;
+        }
+
+        int value = arr[top--];
+
+        if (top + 1 <= arr.length / 4 && arr.length > 2) {
+            resize(arr.length / 2);
+        }
+
+        return value;
+    }
+
+    // Resize Array
+    private void resize(int newSize) {
+
+        int[] newArr = new int[newSize];
+
+        for (int i = 0; i <= top; i++) {
+            newArr[i] = arr[i];
+        }
+
+        arr = newArr;
+    }
+
+    // Peek
+    public int peek() {
+        if (isEmpty()) {
+            return -1;
+        }
+
+        return arr[top];
+    }
+
+    // Check Empty
+    public boolean isEmpty() {
+        return top == -1;
+    }
+
+    // Display
+    public void display() {
+
+        for (int i = 0; i <= top; i++) {
+            System.out.print(arr[i] + " ");
+        }
+
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+
+        UnboundedStack stack = new UnboundedStack();
+
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+        stack.push(40);
+
+        System.out.println("Stack Elements:");
+        stack.display();
+
+        System.out.println("Top Element: " + stack.peek());
+
+        System.out.println("Removed: " + stack.pop());
+        System.out.println("Removed: " + stack.pop());
+
+        System.out.println("After Pop:");
+        stack.display();
+    }
+}
